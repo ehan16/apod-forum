@@ -1,0 +1,15 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+* {
+    padding: 0 px;
+    margin: 0 px;
+    box-sizing: border-box;
+}
+
+body {
+    @apply min-h-screen;
+    background-image: url('/space.jpg');
+}
+

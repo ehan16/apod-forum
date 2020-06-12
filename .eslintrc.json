@@ -1,0 +1,45 @@
+{
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es6": true,
+      "node": true
+    },
+    "parser": "babel-eslint",
+    "extends": [
+      "eslint:recommended",
+      "airbnb",
+      "airbnb/hooks",
+      "plugin:react/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings",
+      "plugin:jsx-a11y/recommended",
+      "plugin:react-hooks/recommended",
+      "prettier"
+    ],
+    "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly",
+      // NextJs specific fix: 'React' must be in scope when using JSX
+      "React": "writable"
+    },
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 11,
+      "sourceType": "module"
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "plugins": ["react", "react-hooks"],
+    "rules": {
+      "singleQuote": true,
+      // NextJs specific fix: suppress errors for missing 'import React' in files for nextjs
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "react/display-name": 1
+    }
+  }
