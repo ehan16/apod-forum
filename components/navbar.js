@@ -7,7 +7,7 @@ const Navbar = () => {
 
   return (
 
-    <nav className="fixed w-full flex flex-col sm:flex-row justify-between items-center px-4 sm:px-6 py-3 text-white bg-gray-900 border-t-4 border-indigo-600">
+    <nav className="fixed z-50 w-full flex flex-col sm:flex-row justify-between items-center px-4 sm:px-6 py-3 text-white bg-gray-900 border-t-4 border-indigo-600">
       <div className="w-full sm:w-auto self-start flex justify-between items-center">
         <Link href="/">
           <h1 className="font-bold text-lg">APOD Forum</h1>
@@ -23,10 +23,13 @@ const Navbar = () => {
       <div className={ navbarOpen ? "flex" : "hidden sm:flex"}>
         <ul className="sm:flex">
           <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
-            <Link href="/" className="sm:px-4"><a>Home</a></Link>
+            <Link href="/" className="sm:px-4"><p>Home</p></Link>
           </li>
           <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
-            <Link href="/login" className="sm:px-4"><a>Login</a></Link>
+            <Link href="/login" className="sm:px-4"><p>Log in</p></Link>
+          </li>
+          <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
+            <Link href="/" className="sm:px-4"><p>Log out</p></Link>
           </li>
         </ul>
       </div>
