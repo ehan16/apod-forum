@@ -23,10 +23,10 @@ const Navbar = () => {
       <div className={ navbarOpen ? "flex" : "hidden sm:flex"}>
         <ul className="sm:flex">
           <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
-            <Link href="/" className="sm:px-4">Home</Link>
+            <Link href="/" className="sm:px-4"><a>Home</a></Link>
           </li>
           <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
-            <Link href="/login" className="sm:px-4">Login</Link>
+            <Link href="/login" className="sm:px-4"><a>Login</a></Link>
           </li>
         </ul>
       </div>

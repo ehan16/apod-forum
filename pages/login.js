@@ -5,8 +5,8 @@ const Login = () => {
   return (
     <Layout>
       <div className="m-auto w-10/12 md:w-8/12 lg:w-5/12 px-5 pb-5 bg-gray-300 rounded">
-          <div className="flex items-center justify-center">
-              <img src="/astronaut.png" className="max-w-xs sm:max-w-sm"/>
+          <div className="flex items-center justify-center py-5">
+              <img src="/astronaut.png" className="w-8/12 sm:w-6/12"/>
           </div>
         <form className="px-2 sm:px-8 pb-8">
           <div className="mb-4">

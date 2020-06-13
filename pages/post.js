@@ -25,7 +25,7 @@ const Post = (props) => {
             </div>
           </form>
           <div className="grid grid-cols-4 gap-4 bg-white my-4 shadow-lg rounded px-4 py-5 relative">
-            <div className="col-span-1 bg-indigo-500 flex items-center justify-center">
+            <div className="col-span-1 bg-indigo-500 rounded-full mx-auto w-20 lg:w-24 h-20 lg:h-24 flex items-center justify-center">
               <p>dasd</p>
             </div>
             <div className="col-span-3 bg-blu-500">

@@ -13,3 +13,8 @@ body {
     background-image: url('/space.jpg');
 }
 
+.cont-p {
+    padding-top: 20vh;
+    padding-bottom: 20vh;
+}
+
