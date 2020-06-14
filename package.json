@@ -10,6 +10,7 @@
     "lint-fix": "eslint ./components/** ./pages/** -c .eslintrc.json --fix --ext js,jsx"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "firebase": "^7.15.1",
     "isomorphic-unfetch": "^3.0.0",
