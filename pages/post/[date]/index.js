@@ -5,6 +5,9 @@ import Layout from '../../../components/layout'
 
 const Index = (props) => {
 
+  // Se obtiene la fecha de hoy para guardar cuando se hizo el comentario
+  const curr = new Date();
+  const today = curr.toISOString().substr(0, 10);
   // const router = useRouter();
   // const { date } = router.query;
   const [post, setPost] = useState();
@@ -24,7 +27,7 @@ const Index = (props) => {
     e.preventDefault();
     const { name, value } = e.currentTarget;
     switch (name) {
-      case "username":
+      case "comment":
         setComment(value);
         break;
     }
@@ -36,9 +39,22 @@ const Index = (props) => {
       // Se valida que ningun campo este vacio
       swal("ERROR", "Existen campos inválidos", "error", { dangerMode: true });
     } else {
+
+      const data = {
+        'comment': comment,
+        'post': props.date,
+        'date': today,
+        'username': 'test'
+      }
+
+      console.log(data);
       
     }
   };
+
+  const getComments = () => {
+
+  }
 
   return (
 
@@ -55,7 +71,7 @@ const Index = (props) => {
                 ? <img src={ post.hdurl } className="w-full"/>
                 : <video src={ post.url } className="w-full" controls></video>
               }
-              <p className="text-white bg-indigo-800 py-2 pl-3 mb-3">{ post.copyright !== undefined ? post.copyright : 'Unknown author' }</p>
+              <p className="text-white bg-indigo-800 py-2 pl-3 mb-3">{ post.copyright !== undefined ? '© ' + post.copyright : 'Unknown author' }</p>
               <p className="my-3 px-2 text-sm sm:text-md">{ post.explanation }</p>
             </div>
           : <p>Fetching data...</p>

@@ -27,6 +27,13 @@ const Login = () => {
       // Se valida que ningun campo este vacio
       swal("ERROR", "Existen campos inválidos", "error", { dangerMode: true });
     } else {
+
+      const data = {
+        'usename': username,
+        'password': password
+      }
+      
+      console.log(data);
       
     }
   };
@@ -44,7 +51,7 @@ const Login = () => {
             </label>
             <input
               type="text"
-              className="shadow rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-100"
+              className="shadow rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-200"
               placeholder="Username"
               value={ username }
               name="username"
@@ -58,7 +65,7 @@ const Login = () => {
             </label>
             <input
               type="password"
-              className="shadow rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-100"
+              className="shadow rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-200"
               placeholder="*********"
               value={ password }
               name="password"
@@ -68,15 +75,15 @@ const Login = () => {
           </div>
           <div className="flex-col sm:flex-row items-center">
             <button 
-              className="bg-indigo-600 w-full sm:w-32 mr-2 my-2 py-2 px-6 hover:bg-indigo-700 rounded"
+              className="text-white bg-indigo-700 w-full sm:w-32 mr-2 my-2 py-2 px-6 hover:bg-indigo-900 rounded"
               type="submit"
               onClick={ handleSubmit }
             >
               Log in
             </button>
-            <Link href="/">
+            <Link href="/signup">
               <button 
-                className="bg-blue-600 w-full sm:w-32 ml-0 sm:ml-2 my-2 py-2 px-6 hover:bg-blue-700 rounded"
+                className="text-white bg-blue-700 w-full sm:w-32 ml-0 sm:ml-2 my-2 py-2 px-6 hover:bg-blue-900 rounded"
                 type="button"
               >
                 Sign up

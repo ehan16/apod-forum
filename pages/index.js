@@ -9,6 +9,7 @@ const Index = () => {
   // Se obtienen las fechas para los input
   const curr = new Date();
   const aux = new Date();
+  aux.setDate(aux.getDate() - 2);
   const today = curr.toISOString().substr(0, 10);
   const start = aux.toISOString().substr(0, 10);
 
@@ -66,14 +67,14 @@ const Index = () => {
 
   return (
     <Layout>
-      <div className="m-auto w-11/12 sm:w-9/12 p-5 bg-gray-200 rounded">
+      <div className="m-auto w-11/12 sm:w-9/12 p-5 px-8 bg-gray-200 rounded">
         {/* Se le da la bienvenida al usuario */}
-        <div className="mb-4 flex justify-center">
+        <div className="mt-4 mb-8 flex justify-center">
           <p className="text-3xl">Welcome to APOD forum!</p>
         </div>
 
         {/* Permite al usuario escoger de que fecha a que fecha se van a ver las fotos */}
-        <form method="post" className="px-3">
+        <form method="post">
           <div className="mb-4">
             <label
               htmlFor="startDate"
@@ -86,7 +87,7 @@ const Index = () => {
               value={startDate}
               name="startDate"
               id="startDate"
-              className="shadow-md rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-100"
+              className="shadow-md rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-200"
               onChange={(e) => handleChange(e)}
             ></input>
           </div>
@@ -103,12 +104,12 @@ const Index = () => {
               name="endDate"
               id="endDate"
               max={today}
-              className="shadow-md rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-100"
+              className="shadow-md rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-200"
               onChange={(e) => handleChange(e)}
             ></input>
           </div>
           <button
-            className="w-full bg-indigo-700 text-white py-2"
+            className="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-2"
             type="submit"
             onClick={handleSubmit}
           >
