@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // import { useRouter } from 'next/router';
-import axios from 'axios'
-import Layout from '../../../components/layout'
+import axios from "axios";
+import { createComment, getComments, deleteComment } from "../../../util/database";
+import Layout from "../../../components/layout";
 
 const Index = (props) => {
-
   // Se obtiene la fecha de hoy para guardar cuando se hizo el comentario
   const curr = new Date();
   const today = curr.toISOString().substr(0, 10);
@@ -15,12 +15,15 @@ const Index = (props) => {
   const [comment, setComment] = useState("");
 
   useEffect(() => {
-      console.log(props.date, 'antes de buscar')
-      axios.get(`https://api.nasa.gov/planetary/apod?api_key=FLmti9W8VuPMJlAglXESSaOWMHn1elDUp4xJD7zb&date=${props.date}`).then(res => {
+    axios
+      .get(
+        `https://api.nasa.gov/planetary/apod?api_key=FLmti9W8VuPMJlAglXESSaOWMHn1elDUp4xJD7zb&date=${props.date}`
+      )
+      .then((res) => {
         setPost(res.data);
-        console.log(props.date)
-        }
-      ).catch(err => console.log(err))
+      })
+      .catch((err) => console.log(err));
+    fetchComments();
   }, []);
 
   const handleChange = (e) => {
@@ -35,65 +38,91 @@ const Index = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (comment === '') {
+    if (comment === "") {
       // Se valida que ningun campo este vacio
       swal("ERROR", "Existen campos inválidos", "error", { dangerMode: true });
     } else {
-
       const data = {
-        'comment': comment,
-        'post': props.date,
-        'date': today,
-        'username': 'test'
-      }
+        comment: comment,
+        post: props.date,
+        date: today,
+        show: true,
+        username: "test",
+      };
 
       console.log(data);
-      
+      createComment(data)
+        .then((res) => {
+          setComment("");
+          fetchComments();  // Cada vez que se agregue un comentario, se actualiza la vista
+        })
+        .catch((err) => console.log(err));
     }
   };
 
-  const getComments = () => {
+  // Metodo para traer todos los comentarios del post
+  const fetchComments = () => {
+    const aux = [];
+    getComments(props.date).then((res) => {
+      if (!res.empty) {
+        res.forEach((doc) => {
+          console.log(doc.data());
+          aux.push({id: doc.id, data: doc.data()});
+        });
+      }
+      console.log(aux);
+      setComments(aux);
+    });
+  };
 
+  // Metodo para "eliminar" un comentario
+  const delComment = (commentId) => {
+    deleteComment(commentId);
+    fetchComments();   // Cada vez que se borre un comentario, se actualiza la vista
   }
 
   return (
-
     <Layout>
-
       <div className="m-auto w-11/12 sm:w-9/12 p-6 sm:p-8 bg-gray-200 rounded">
-
         {/* Todos los datos de la foto */}
-        { post 
-          ? <div className="mb-8">
-              <p className="text-2xl sm:text-3xl font-sans">{  post.title }</p>
-              <p className="text-sm text-gray-700 font-mono mt-2 mb-4 pl-1">{ post.date }</p>
-              { post.media_type === 'image' 
-                ? <img src={ post.hdurl } className="w-full"/>
-                : <video src={ post.url } className="w-full" controls></video>
-              }
-              <p className="text-white bg-indigo-800 py-2 pl-3 mb-3">{ post.copyright !== undefined ? '© ' + post.copyright : 'Unknown author' }</p>
-              <p className="my-3 px-2 text-sm sm:text-md">{ post.explanation }</p>
-            </div>
-          : <p>Fetching data...</p>
-        }
+        {post ? (
+          <div className="mb-8">
+            <p className="text-2xl sm:text-3xl font-sans">{post.title}</p>
+            <p className="text-sm text-gray-700 font-mono mt-2 mb-4 pl-1">
+              {post.date}
+            </p>
+            {post.media_type === "image" ? (
+              <img src={post.hdurl} className="w-full" />
+            ) : (
+              <video src={post.url} className="w-full" controls></video>
+            )}
+            <p className="text-white bg-indigo-800 py-2 pl-3 mb-3">
+              {post.copyright !== undefined
+                ? "© " + post.copyright
+                : "Unknown author"}
+            </p>
+            <p className="my-3 px-2 text-sm sm:text-md">{post.explanation}</p>
+          </div>
+        ) : (
+          <p>Fetching data...</p>
+        )}
 
         <div>
-
           {/* Caja para que el usuario coloque su comentario */}
           <form method="post" className="my-5">
             <div className="flex">
               <textarea
                 className="w-full p-3 rounded"
                 placeholder="Your comment..."
-                value={ comment }
+                value={comment}
                 name="comment"
                 id="comment"
                 onChange={(e) => handleChange(e)}
               ></textarea>
-              <button 
+              <button
                 className="bg-indigo-600 hover:bg-indigo-800"
                 type="submit"
-                onClick={ handleSubmit }
+                onClick={handleSubmit}
               >
                 <i className="fa fa-reply p-4 text-white text-2xl"></i>
               </button>
@@ -101,33 +130,35 @@ const Index = (props) => {
           </form>
 
           {/* Todos los comentarios del post */}
-          <div className="grid grid-cols-4 gap-4 bg-white my-4 shadow-lg rounded px-4 py-5 relative">
-            <div className="col-span-1 bg-indigo-500 rounded-full m-auto w-16 sm:w-20 lg:w-24 h-16 sm:h-20 lg:h-24 flex items-center justify-center">
-              <p>dasd</p>
-            </div>
-            <div className="col-span-3 bg-blu-500">
-              <p>
-                Usuario<span className="text-xs text-gray-600 ml-5">Fecha</span>
-              </p>
-              <p className="text-sm mt-2">
-                Comentario super random que tengo que tratar de hacerlo
-                relativamente largo a ver como queda y visualizar y analizar la
-                estetica del comentario
-              </p>
-            </div>
-            <button className="absolute top-0 right-0 mr-5 mt-4 focus:outline-none">
-              <i className="fa fa-trash text-xl text-indigo-800 hover:text-indigo-600"></i>
-            </button>
-          </div>
-
+          {comments ? (
+            comments.map((comment) => 
+              <div key={comment.id} className="grid grid-cols-4 gap-4 bg-white my-4 shadow-lg rounded px-4 py-5 relative">
+                <div className="col-span-1 bg-indigo-500 rounded-full m-auto w-16 sm:w-20 lg:w-24 h-16 sm:h-20 lg:h-24 flex items-center justify-center">
+                  <p className="uppercase">{ comment.data.username.charAt(0) }</p>
+                </div>
+                <div className="col-span-3 bg-blu-500">
+                  <p>
+                    { comment.data.username }
+                    <span className="text-xs text-gray-600 ml-5">{ comment.data.date }</span>
+                  </p>
+                  <p className="text-sm mt-2">
+                    { comment.data.comment }
+                  </p>
+                </div>
+                <button 
+                  className="absolute top-0 right-0 mr-5 mt-4 focus:outline-none"
+                  onClick={() => delComment(comment.id)}
+                >
+                  <i className="fa fa-trash text-xl text-indigo-800 hover:text-indigo-600"></i>
+                </button>
+              </div>
+            )
+          ) : null
+          }
         </div>
-
       </div>
-
     </Layout>
-
   );
-
 };
 
 Index.getInitialProps = ({ query: { date } }) => {

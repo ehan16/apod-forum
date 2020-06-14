@@ -50,9 +50,9 @@ const Login = () => {
               Username
             </label>
             <input
-              type="text"
+              type="email"
               className="shadow rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-200"
-              placeholder="Username"
+              placeholder="Username@gmail.com"
               value={ username }
               name="username"
               id="username" 
