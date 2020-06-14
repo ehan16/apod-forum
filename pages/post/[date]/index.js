@@ -130,7 +130,7 @@ const Index = (props) => {
             </p>
           </div>
         ) : (
-          <p className="cursor-wait">Fetching data...</p>
+          <p className="cursor-wait h-20 m-6">Fetching data...</p>
         )}
 
         <div>
