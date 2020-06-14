@@ -3,21 +3,17 @@
 @import "tailwindcss/utilities";
 
 * {
-    padding: 0 px;
-    margin: 0 px;
-    box-sizing: border-box;
+  padding: 0 px;
+  margin: 0 px;
+  box-sizing: border-box;
 }
 
 body {
-    @apply min-h-screen;
-    background-image: url('/space.jpg');
+  @apply min-h-screen;
+  background-image: url("/space.jpg");
 }
 
 .cont-p {
-    padding-top: 20vh;
-    padding-bottom: 20vh;
+  padding-top: 20vh;
+  padding-bottom: 20vh;
 }
-
-.swal-modal { background-color: #272727; }
-.swal-text, .swal-title { color: white; }
-

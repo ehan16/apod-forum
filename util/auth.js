@@ -4,20 +4,16 @@ import { createUser, getUser } from "./database";
 
 const authContext = createContext();
 
-export function UserContextProvider({ children }) {
-  const user = useProvideAuth();
-  return <authContext.Provider value={user}>{children}</authContext.Provider>;
-}
-
-function useProvideAuth() {
+export function UserContextProvider(props) {
   const [user, setUser] = useState(null);
 
-  const signup = (email, password) => {
+  const signup = (email, password, name) => {
     return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
         const data = {
+          name: name,
           uid: res.user.uid,
           username: email,
           type: "normal",
@@ -29,14 +25,15 @@ function useProvideAuth() {
       });
   };
 
-  const signin = (email, password) => {
+  const login = (email, password) => {
     return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
         getUser(res.user.uid).then((res) => {
-          console.log(res);
-          // return
+          console.log(res.data());
+          setUser(res.data());
+          console.log(user);
         });
       });
   };
@@ -46,20 +43,17 @@ function useProvideAuth() {
       .auth()
       .signOut()
       .then(() => {
-        setUser(false);
-        return false;
+        handleUser(false)
       });
   };
 
   const handleUser = (user) => {
     if (user) {
-      const data = {
-        uid: user.uid,
-        username: user.email,
-      };
-
-      setUser(user);
-      return user;
+      getUser(user.uid).then((res) => {
+        console.log(res.data());
+        setUser(res.data());
+        return res.data();
+      });
     } else {
       setUser(false);
       return false;
@@ -71,12 +65,11 @@ function useProvideAuth() {
     return () => unsubscribe();
   }, []);
 
-  return {
-    user,
-    signup,
-    signin,
-    logout,
-  };
+  return (
+    <authContext.Provider value={{ user, signup, login, logout }}>
+      {props.children}
+    </authContext.Provider>
+  );
 }
 
 export const useAuth = () => {

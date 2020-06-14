@@ -1,10 +1,11 @@
 import { useState } from "react";
 import Layout from "../components/layout";
 import Link from "next/link";
-import swal from 'sweetalert';
+import swal from "sweetalert";
+import { useAuth } from "../util/auth";
 
 const Login = () => {
-
+  const auth = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,18 +24,17 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username === '' || password === '') {
+    if (username === "" || password === "") {
       // Se valida que ningun campo este vacio
-      swal("ERROR", "Existen campos inválidos", "error", { dangerMode: true });
+      swal("ERROR", "Invalid fields, try again", "error");
     } else {
-
       const data = {
-        'usename': username,
-        'password': password
-      }
-      
+        usename: username,
+        password: password,
+      };
+
       console.log(data);
-      
+      auth.login(username, password).then().catch(err => {swal("ERROR", `${err}`, "error")});
     }
   };
 
@@ -46,43 +46,51 @@ const Login = () => {
         </div>
         <form className="px-2 sm:px-8 pb-8">
           <div className="mb-4">
-            <label htmlFor="username" className="block mb-2 text-gray-800 font-bold">
+            <label
+              htmlFor="username"
+              className="block mb-2 text-gray-800 font-bold"
+            >
               Username
             </label>
             <input
               type="email"
               className="shadow rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-200"
               placeholder="Username@gmail.com"
-              value={ username }
+              value={username}
               name="username"
-              id="username" 
+              id="username"
               onChange={(e) => handleChange(e)}
             ></input>
           </div>
           <div className="mb-6">
-            <label htmlFor="password" className="block mb-2 text-gray-800 font-bold">
+            <label
+              htmlFor="password"
+              className="block mb-2 text-gray-800 font-bold"
+            >
               Password
             </label>
             <input
               type="password"
               className="shadow rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-200"
               placeholder="*********"
-              value={ password }
+              value={password}
               name="password"
               id="password"
               onChange={(e) => handleChange(e)}
             ></input>
           </div>
           <div className="flex-col sm:flex-row items-center">
-            <button 
-              className="text-white bg-indigo-700 w-full sm:w-32 mr-2 my-2 py-2 px-6 hover:bg-indigo-900 rounded"
-              type="submit"
-              onClick={ handleSubmit }
-            >
-              Log in
-            </button>
+            <Link href="/">
+              <button
+                className="text-white bg-indigo-700 w-full sm:w-32 mr-2 my-2 py-2 px-6 hover:bg-indigo-900 rounded"
+                type="submit"
+                onClick={ handleSubmit }
+              >
+                Log in
+              </button>
+            </Link>
             <Link href="/signup">
-              <button 
+              <button
                 className="text-white bg-blue-700 w-full sm:w-32 ml-0 sm:ml-2 my-2 py-2 px-6 hover:bg-blue-900 rounded"
                 type="button"
               >

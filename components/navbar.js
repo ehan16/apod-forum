@@ -1,17 +1,15 @@
-import Link from 'next/link';
-import { useState } from 'react';
+import Link from "next/link";
+import { useState } from "react";
+import { useAuth } from "../util/auth";
 
 const Navbar = () => {
-
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const auth = useAuth();
 
   return (
-
     <nav className="fixed z-50 w-full flex flex-col sm:flex-row justify-between items-center px-4 sm:px-6 py-3 text-white bg-gray-900 border-t-4 border-indigo-600">
       <div className="w-full sm:w-auto self-start flex justify-between items-center">
-        <Link href="/">
-          <h1 className="font-bold text-lg">APOD Forum</h1>
-        </Link>
+        <h1 className="font-bold text-lg">APOD <span className="text-indigo-500">Forum</span></h1>
         <button
           className="block sm:hidden text-lg py-1 px-2 hover:text-indigo-500"
           type="button"
@@ -20,22 +18,38 @@ const Navbar = () => {
           <i className="fa fa-bars"></i>
         </button>
       </div>
-      <div className={ navbarOpen ? "flex" : "hidden sm:flex"}>
+      <div className={navbarOpen ? "flex" : "hidden sm:flex"}>
         <ul className="sm:flex">
           <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
-            <Link href="/" className="sm:px-4"><p>Home</p></Link>
+            <Link href="/" className="sm:px-4">
+              <p>Home</p>
+            </Link>
           </li>
-          <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
-            <Link href="/login" className="sm:px-4"><p>Log in</p></Link>
-          </li>
-          <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
-            <Link href="/" className="sm:px-4"><p>Log out</p></Link>
-          </li>
+          {!auth?.user && (
+            <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
+              <Link href="/login" className="sm:px-4">
+                <p>Log in</p>
+              </Link>
+            </li>
+          )}
+          {auth?.user && (
+            <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
+              <Link href="/" className="sm:px-4" onClick={() => auth.logout}>
+                <p>Log out</p>
+              </Link>
+            </li>
+          )}
+          {/* Se muestra el nombre del usuario para reconocer si ha iniciado sesion */}
+          {auth?.user && (
+            <li className="py-2 sm:py-0 mx-3 text-indigo-500">
+              <p>{auth?.user?.name}</p>
+            </li>
+          )}
         </ul>
+        {console.log(auth.user)}
       </div>
     </nav>
   );
-
 };
 
 export default Navbar;

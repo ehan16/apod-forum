@@ -2,9 +2,12 @@ import { useState } from "react";
 import Layout from "../components/layout";
 import Link from "next/link";
 import swal from 'sweetalert';
+import { useAuth } from "../util/auth";
 
 const Signup = () => {
 
+  const auth = useAuth();
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -13,6 +16,9 @@ const Signup = () => {
     e.preventDefault();
     const { name, value } = e.currentTarget;
     switch (name) {
+      case "name":
+        setName(value);
+        break;
       case "username":
         setUsername(value);
         break;
@@ -28,17 +34,12 @@ const Signup = () => {
   const handleSubmit = (e) => {
 
     e.preventDefault();
-    if (username === '' || password === '' || confirmPassword === '' || password !== confirmPassword) {
+    if (name === '' || username === '' || password === '' || confirmPassword === '' || password !== confirmPassword) {
       // Se valida que ningun campo este vacio
-      swal("ERROR", "Existen campos inválidos", "error", { dangerMode: true });
+      swal("ERROR", "Invalid fields, try again", "error");
     } else {
 
-      const data = {
-        'usename': username,
-        'password': password
-      }
-      
-      console.log(data);
+      auth.signup(username, password, name).then().catch(err => {swal("ERROR", `${err}`, "error")});
 
     }
 
@@ -55,6 +56,20 @@ const Signup = () => {
 
         {/* Formulario para registrarse */}
         <form method="post" className="px-2 sm:px-8 pb-8">
+          <div className="mb-4">
+            <label htmlFor="username" className="block mb-2 text-gray-800 font-bold">
+              Name
+            </label>
+            <input
+              type="text"
+              className="shadow rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-200"
+              placeholder="John Doe"
+              value={ name }
+              name="name"
+              id="name" 
+              onChange={(e) => handleChange(e)}
+            ></input>
+          </div>
           <div className="mb-4">
             <label htmlFor="username" className="block mb-2 text-gray-800 font-bold">
               Username
@@ -100,19 +115,19 @@ const Signup = () => {
           <div className="flex-col sm:flex-row items-center">
             <Link href="/">
               <button 
-                className="bg-blue-700 text-white w-full sm:w-32 ml-0 sm:ml-2 my-2 py-2 px-6 hover:bg-blue-900 rounded"
-                type="button"
-              >
-                Cancel
-              </button>
-            </Link>
-            <Link href="/">
-              <button 
                 className="text-white bg-indigo-700 w-full sm:w-32 ml-0 sm:ml-2 my-2 py-2 px-6 hover:bg-indigo-900 rounded"
                 type="submit"
                 onClick={ handleSubmit }
               >
                 Sign up
+              </button>
+            </Link>
+            <Link href="/">
+              <button 
+                className="bg-blue-700 text-white w-full sm:w-32 ml-0 sm:ml-2 my-2 py-2 px-6 hover:bg-blue-900 rounded"
+                type="button"
+              >
+                Cancel
               </button>
             </Link>
           </div>

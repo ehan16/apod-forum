@@ -13,9 +13,7 @@ const Layout = (props) => {
       <div>
         <Navbar />
         <div className="container mx-auto cont-p">
-          {/* <div className="m-auto w-11/12 sm:w-9/12 p-5 bg-gray-200 rounded"> */}
             {props.children}
-          {/* </div> */}
         </div>
       </div>
     </div>
