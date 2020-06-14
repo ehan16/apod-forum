@@ -1,10 +1,19 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useAuth } from "../util/auth";
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
+
+  // Variables de la clase
+  const router = useRouter();
   const [navbarOpen, setNavbarOpen] = useState(false);
   const auth = useAuth();
+
+  const signOut = () => {
+    auth.logout();
+    router.push('/login');
+  }
 
   return (
     <nav className="fixed z-50 w-full flex flex-col sm:flex-row justify-between items-center px-4 sm:px-6 py-3 text-white bg-gray-900 border-t-4 border-indigo-600">
@@ -33,10 +42,10 @@ const Navbar = () => {
             </li>
           )}
           {auth?.user && (
-            <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
-              <Link href="/" className="sm:px-4" onClick={() => auth.logout}>
+            <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500" onClick={() => signOut()}>
+              {/* <Link href="/login" className="sm:px-4"> */}
                 <p>Log out</p>
-              </Link>
+              {/* </Link> */}
             </li>
           )}
           {/* Se muestra el nombre del usuario para reconocer si ha iniciado sesion */}
@@ -46,7 +55,6 @@ const Navbar = () => {
             </li>
           )}
         </ul>
-        {console.log(auth.user)}
       </div>
     </nav>
   );

@@ -67,7 +67,7 @@ const Index = () => {
 
   return (
     <Layout>
-      <div className="m-auto w-11/12 sm:w-9/12 p-5 px-8 bg-gray-200 rounded">
+      <div className="m-auto w-11/12 sm:w-9/12 lg:w-6/12 p-5 px-8 bg-gray-200 rounded">
         {/* Se le da la bienvenida al usuario */}
         <div className="mt-4 mb-8 flex justify-center">
           <p className="text-3xl">Welcome to APOD forum!</p>

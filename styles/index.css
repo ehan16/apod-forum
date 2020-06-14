@@ -11,9 +11,10 @@
 body {
   @apply min-h-screen;
   background-image: url("/space.jpg");
+  background-size: contain;
 }
 
 .cont-p {
   padding-top: 20vh;
-  padding-bottom: 20vh;
+  padding-bottom: 15vh;
 }

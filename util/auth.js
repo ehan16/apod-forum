@@ -43,7 +43,8 @@ export function UserContextProvider(props) {
       .auth()
       .signOut()
       .then(() => {
-        handleUser(false)
+        handleUser(false);
+        console.log("Logged out")
       });
   };
 
@@ -62,7 +63,9 @@ export function UserContextProvider(props) {
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged(handleUser);
+    // console.log(firebase.auth().currentUser);
     return () => unsubscribe();
+    // handleUser(firebase.auth().currentUser);
   }, []);
 
   return (

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Navbar from "./navbar";
+import Footer from "./footer";
 
 const Layout = (props) => {
 
@@ -15,6 +16,7 @@ const Layout = (props) => {
         <div className="container mx-auto cont-p">
             {props.children}
         </div>
+        <Footer />
       </div>
     </div>
 

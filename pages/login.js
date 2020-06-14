@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { useRouter } from 'next/router'
+import { useAuth } from "../util/auth";
 import Layout from "../components/layout";
 import Link from "next/link";
 import swal from "sweetalert";
-import { useAuth } from "../util/auth";
 
 const Login = () => {
+
+  // Variables de la clase
   const auth = useAuth();
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -34,7 +38,9 @@ const Login = () => {
       };
 
       console.log(data);
-      auth.login(username, password).then().catch(err => {swal("ERROR", `${err}`, "error")});
+      auth.login(username, password).then(res => 
+        router.push('/')
+      ).catch(err => {swal("ERROR", `${err}`, "error")});
     }
   };
 
@@ -80,7 +86,6 @@ const Login = () => {
             ></input>
           </div>
           <div className="flex-col sm:flex-row items-center">
-            <Link href="/">
               <button
                 className="text-white bg-indigo-700 w-full sm:w-32 mr-2 my-2 py-2 px-6 hover:bg-indigo-900 rounded"
                 type="submit"
@@ -88,7 +93,6 @@ const Login = () => {
               >
                 Log in
               </button>
-            </Link>
             <Link href="/signup">
               <button
                 className="text-white bg-blue-700 w-full sm:w-32 ml-0 sm:ml-2 my-2 py-2 px-6 hover:bg-blue-900 rounded"
