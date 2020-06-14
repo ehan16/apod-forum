@@ -125,7 +125,7 @@ const Index = (props) => {
                 ? "© " + post.copyright
                 : "Unknown author"}
             </p>
-            <p className="mb-3 mt-5 px-2 text-sm sm:text-md">
+            <p className="mb-3 mt-5 px-2 text-sm sm:text-md text-justify">
               {post.explanation}
             </p>
           </div>

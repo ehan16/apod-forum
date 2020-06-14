@@ -31,8 +31,8 @@ const Navbar = () => {
         </button>
       </div>
       <div className={navbarOpen ? "flex" : "hidden sm:flex"}>
-        <ul className="sm:flex">
-          <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
+        <ul className="sm:flex mx-auto">
+          <li className="py-2 sm:py-0 mx-3 sm: hover:text-indigo-500 cursor-pointer">
             <Link href="/" className="sm:px-4">
               <p>Home</p>
             </Link>
