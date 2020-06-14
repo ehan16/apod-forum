@@ -5,6 +5,7 @@ import { createComment, getComments, deleteComment } from "../../../util/databas
 import Layout from "../../../components/layout";
 
 const Index = (props) => {
+
   // Se obtiene la fecha de hoy para guardar cuando se hizo el comentario
   const curr = new Date();
   const today = curr.toISOString().substr(0, 10);
@@ -21,6 +22,7 @@ const Index = (props) => {
       )
       .then((res) => {
         setPost(res.data);
+        console.log('post', res.data);
       })
       .catch((err) => console.log(err));
     fetchComments();
@@ -82,6 +84,7 @@ const Index = (props) => {
   }
 
   return (
+    
     <Layout>
       <div className="m-auto w-11/12 sm:w-9/12 p-6 sm:p-8 bg-gray-200 rounded">
         {/* Todos los datos de la foto */}
@@ -94,14 +97,14 @@ const Index = (props) => {
             {post.media_type === "image" ? (
               <img src={post.hdurl} className="w-full" />
             ) : (
-              <video src={post.url} className="w-full" controls></video>
+              <iframe src={post.url} className="w-full" allowFullScreen frameBorder="0"></iframe>
             )}
             <p className="text-white bg-indigo-800 py-2 pl-3 mb-3">
               {post.copyright !== undefined
                 ? "© " + post.copyright
                 : "Unknown author"}
             </p>
-            <p className="my-3 px-2 text-sm sm:text-md">{post.explanation}</p>
+            <p className="mb-3 mt-5 px-2 text-sm sm:text-md">{post.explanation}</p>
           </div>
         ) : (
           <p>Fetching data...</p>
@@ -113,7 +116,7 @@ const Index = (props) => {
             <div className="flex">
               <textarea
                 className="w-full p-3 rounded"
-                placeholder="Your comment..."
+                placeholder="Write your comment here..."
                 value={comment}
                 name="comment"
                 id="comment"
@@ -134,7 +137,7 @@ const Index = (props) => {
             comments.map((comment) => 
               <div key={comment.id} className="grid grid-cols-4 gap-4 bg-white my-4 shadow-lg rounded px-4 py-5 relative">
                 <div className="col-span-1 bg-indigo-500 rounded-full m-auto w-16 sm:w-20 lg:w-24 h-16 sm:h-20 lg:h-24 flex items-center justify-center">
-                  <p className="uppercase">{ comment.data.username.charAt(0) }</p>
+                  <p className="uppercase text-white text-2xl font-extrabold">{ comment.data.username.charAt(0) }</p>
                 </div>
                 <div className="col-span-3 bg-blu-500">
                   <p>
@@ -158,6 +161,7 @@ const Index = (props) => {
         </div>
       </div>
     </Layout>
+
   );
 };
 

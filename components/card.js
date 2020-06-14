@@ -5,7 +5,7 @@ const Card = (props) => {
     <div className="container shadow-2xl relative my-8">
       { props.post.media_type === 'image' 
             ? <img src={ props.post.hdurl } className="w-full"/>
-            : <video src={ props.post.url } className="w-full" controls></video>
+            : <iframe src={props.post.url} className="w-full" frameBorder="0"></iframe>
           }
       <div
         className="p-5 absolute inset-0 h-full w-full text-transparent transition duration-500 ease-in-out hover:text-gray-200 hover:bg-gray-900 hover:bg-opacity-50 cursor-pointer"
