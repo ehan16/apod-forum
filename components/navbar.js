@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useAuth } from "../util/auth";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 const Navbar = () => {
-
   // Variables de la clase
   const router = useRouter();
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -12,13 +11,17 @@ const Navbar = () => {
 
   const signOut = () => {
     auth.logout();
-    router.push('/login');
-  }
+    router.push("/login");
+  };
 
   return (
     <nav className="fixed z-50 w-full flex flex-col sm:flex-row justify-between items-center px-4 sm:px-6 py-3 text-white bg-gray-900 border-t-4 border-indigo-600">
       <div className="w-full sm:w-auto self-start flex justify-between items-center">
-        <h1 className="font-bold text-lg">APOD <span className="text-indigo-500">Forum</span></h1>
+        <Link href="/">
+          <h1 className="font-bold text-lg cursor-pointer">
+            APOD <span className="text-indigo-500">Forum</span>
+          </h1>
+        </Link>
         <button
           className="block sm:hidden text-lg py-1 px-2 hover:text-indigo-500"
           type="button"
@@ -35,22 +38,23 @@ const Navbar = () => {
             </Link>
           </li>
           {!auth?.user && (
-            <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500">
+            <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500 cursor-pointer">
               <Link href="/login" className="sm:px-4">
                 <p>Log in</p>
               </Link>
             </li>
           )}
           {auth?.user && (
-            <li className="py-2 sm:py-0 mx-3 hover:text-indigo-500" onClick={() => signOut()}>
-              {/* <Link href="/login" className="sm:px-4"> */}
-                <p>Log out</p>
-              {/* </Link> */}
+            <li
+              className="py-2 sm:py-0 mx-3 hover:text-indigo-500 cursor-pointer"
+              onClick={() => signOut()}
+            >
+              <p>Log out</p>
             </li>
           )}
           {/* Se muestra el nombre del usuario para reconocer si ha iniciado sesion */}
           {auth?.user && (
-            <li className="py-2 sm:py-0 mx-3 text-indigo-500">
+            <li className="py-2 sm:py-0 mx-3 text-indigo-500 cursor-pointer">
               <p>{auth?.user?.name}</p>
             </li>
           )}

@@ -4,7 +4,7 @@ const Card = (props) => {
   return (
     <div className="container shadow-2xl relative my-8">
       { props.post.media_type === 'image' 
-            ? <img src={ props.post.hdurl } className="w-full"/>
+            ? <img src={ props.post.url } className="w-full"/>
             : <iframe src={props.post.url} className="w-full" frameBorder="0"></iframe>
           }
       <div

@@ -87,6 +87,7 @@ const Index = () => {
               value={startDate}
               name="startDate"
               id="startDate"
+              max={today}
               className="shadow-md rounded w-full py-2 px-3 outline-none focus:shadow-outline focus:bg-indigo-200"
               onChange={(e) => handleChange(e)}
             ></input>
