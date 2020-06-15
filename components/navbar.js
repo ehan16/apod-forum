@@ -55,7 +55,7 @@ const Navbar = () => {
           {/* Se muestra el nombre del usuario para reconocer si ha iniciado sesion */}
           {auth?.user && (
             <li className="py-2 sm:py-0 mx-3 text-indigo-500 cursor-pointer">
-              <p>{auth?.user?.name}</p>
+              <p className="capitalize">{auth?.user?.name}</p>
             </li>
           )}
         </ul>

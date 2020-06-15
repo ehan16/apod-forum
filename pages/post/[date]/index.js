@@ -170,7 +170,7 @@ const Index = (props) => {
                     </p>
                   </div>
                   <div className="col-span-3 bg-blu-500">
-                    <p>{comment.data.username}</p>
+                    <p className="capitalize">{comment.data.username}</p>
                     <p className="text-xs text-gray-600">
                       {comment.data.date}
                     </p>

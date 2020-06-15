@@ -47,9 +47,7 @@ const Signup = () => {
     } else {
       auth
         .signup(username, password, name)
-        .then((res) => {
-          console.log(res.data());
-        })
+        .then()
         .catch((err) => {
           swal("ERROR", `${err}`, "error");
         });
